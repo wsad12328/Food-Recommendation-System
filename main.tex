@@ -1,0 +1,67 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}              % To produce the CAMERA-READY version
+\usepackage{CJKutf8}           % 支持中文
+
+% Import additional packages in the preamble file, before hyperref
+% \input{preamble}
+
+\definecolor{cvprblue}{rgb}{0.21,0.49,0.74}
+\usepackage[pagebackref,breaklinks,colorlinks,allcolors=cvprblue]{hyperref}
+
+% \def\paperID{*****} % *** Enter the Paper ID here
+\def\confName{CVPR}
+\def\confYear{2025}
+
+\title{A Food Recommendation System Based on Graph Neural Networks}
+
+\author{
+\begin{minipage}{0.45\textwidth}
+\centering
+張碩文\\
+NCKU CSIE\\
+{\tt\small p76134692@gs.ncku.edu.tw}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+陳子輝\\
+NCKU CSIE\\
+{\tt\small p76135062@gs.ncku.edu.tw}
+\end{minipage}
+\\[1.5cm] % 這裡調整上下兩行之間的間距
+\begin{minipage}{0.45\textwidth}
+\centering
+蘇祐蓁\\
+NCKU CSIE\\
+{\tt\small ne6131021@gs.ncku.edu.tw}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+許漢權\\
+NCKU CSIE\\
+{\tt\small q56135019@gs.ncku.edu.tw}
+\end{minipage}
+}
+
+
+
+
+\begin{document}
+\begin{CJK}{UTF8}{bkai}  % 在 document 中开始中文支持
+
+\maketitle
+\input{sec/0_abstract}    
+\input{sec/1_intro}
+\input{sec/2_Method}
+\input{sec/3_Expected_Results.tex}
+
+{
+    \small
+    \bibliographystyle{ieeenat_fullname}
+    \bibliography{main}
+}
+
+\end{CJK}  % 在 document 结束时关闭中文支持
+\end{document}
