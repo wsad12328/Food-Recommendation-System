@@ -1,0 +1,34 @@
+# LaTeX intermediate files
+*.aux
+*.bbl
+*.blg
+*.brf
+*.dvi
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.pdf
+*.run.xml
+*.toc
+*.synctex.gz
+
+# Backup files
+*~
+*.bak
+*.tmp
+*.orig
+
+# Editor specific files
+.vscode/
+*.swp
+*.swo
+*.swn
+
+# LaTeX compilation results
+/build/
+*.pdf
+
+# Ignore personal settings
+*.latexmkrc
+*.tex.bak
