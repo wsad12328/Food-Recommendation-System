@@ -1,5 +1,12 @@
 \section{Proposed}
 \subsection{Data Preprocessing}
+\begin{figure}[tbh]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/preprocess.pdf}
+    \caption{資料前處理架構圖}
+    \label{fig-preprocess}
+\end{figure}
+本研究的資料前處理架構如\xfig{fig-preprocess}所示，利用爬蟲技術從多個平台（如 Foodpanda 和 Google Maps）獲取餐廳資料，並將資料集分為餐廳名稱、餐廳類型、評分及評論等類別。考慮到將所有評論合併可能會影響大規模語言模型（LLM）的微調效果，本研究首先採用 LLM 對評論進行分類，確定其屬於評價餐點、環境氣氛，或同時屬於這兩類中。其中對於已分類的評論，再次進行分類，以判斷其屬於正面評價還是負面評價。
 \subsection{Model}
 \color{blue}
 本研究採用之~NIE-GCN~\cite{NIE-GCN}~內部可拆成以下步驟，第一步會先對每個餐廳節點 $i$ 做向量嵌入，得到 $d$ 維的向量 $e_i \in \mathbb{R}^d$，將每個個餐廳節點 i 的嵌入向量蒐集後可表達成下式 
