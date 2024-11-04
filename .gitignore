@@ -12,23 +12,3 @@
 *.run.xml
 *.toc
 *.synctex.gz
-
-# Backup files
-*~
-*.bak
-*.tmp
-*.orig
-
-# Editor specific files
-.vscode/
-*.swp
-*.swo
-*.swn
-
-# LaTeX compilation results
-/build/
-*.pdf
-
-# Ignore personal settings
-*.latexmkrc
-*.tex.bak
