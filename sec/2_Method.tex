@@ -1,15 +1,13 @@
-\color{blue}
-
 \begin{figure*}[htbp]
     \centering
     \includegraphics[width=\textwidth]{img/Model.pdf} % 替換成你的圖片檔案
     \caption{模型架構圖}
-    \label{fig:cross-column}
+    \label{Model}
 \end{figure*}
 
 \section{Proposed}
 \subsection{Single Embedding Layer}
-    本研究所採用的NIE-GCN\cite{NIE-GCN}~模型可拆解成幾個主要步驟，首先是對餐廳節點進行向量嵌入。第一步會針對每個餐廳節點 $i$ 生成一個嵌入向量 $e_i$，此向量位於 $d$ 維空間中，即 $e_i \in \mathbb{R}^d$。在嵌入過程中，所有餐廳節點的嵌入向量會被收集成一組矩陣 $E_I^{(0)}$，此矩陣表達了所有餐廳節點的初始嵌入狀態，如下式所示： 
+    本研究所採用的~NIE-GCN\cite{NIE-GCN}~模型可拆解成幾個主要步驟如\xfig{Model}，首先是對餐廳節點進行向量嵌入。第一步會針對每個餐廳節點 $i$ 生成一個嵌入向量 $e_i$，此向量位於 $d$ 維空間中，即 $e_i \in \mathbb{R}^d$。在嵌入過程中，所有餐廳節點的嵌入向量會被收集成一組矩陣 $E_I^{(0)}$，此矩陣表達了所有餐廳節點的初始嵌入狀態，如下式所示： 
     \begin{equation} 
         E_I^{(0)} = {e_{i_1}^{(0)}, e_{i_2}^{(0)},\cdots,e_{i_N}^{(0)}} \in \mathbb{R}^{N \times d}, 
     \end{equation}
@@ -51,9 +49,17 @@
     其中 $L$ 表示嵌入層的總數。這樣計算得到的 $e_u^*$ 和 $e_i^*$ 分別代表了使用者節點和餐廳節點的最終嵌入向量，這兩個向量綜合了多層的信息，能夠更全面地捕捉使用者與餐廳之間的潛在關聯。
     為了進一步評估使用者 $u$ 和餐廳 $i$ 之間的關聯性，將這兩個最終嵌入向量進行內積操作，為了將內積值限制在 0 到 1 的範圍內，引入了 S 型函數 (sigmoid function)，計算公式如下： 
     \begin{equation} 
-        \hat{y_{ui}} = f(u, i) = \sigma(e_u^{T} e_i^), 
+        \hat{y_{ui}} = f(u, i) = \sigma(e_u^{*T} e_i^*), 
     \end{equation} 
     其中，$\hat{y_{ui}}$ 表示模型對於使用者 $u$ 和餐廳 $i$ 之間關聯性的預測結果。S 型函數 $\sigma(\cdot)$ 將內積的結果映射到 $[0, 1]$ 的範圍，使得模型的輸出可以被解釋為一個概率值，表達使用者 $u$ 對餐廳 $i$ 的喜好程度。
 
 \subsection{Model Optimization}
-    待完成
+    本研究模型的目標函數採用貝氏個性化排序 (Bayesian Personalized Ranking, BPR)，以實現使用者偏好排序的優化，具體公式如下：
+    \begin{equation}
+        \mathcal{L} = \sum_{(u, i) \in \mathcal{O^+}, (u, j) \in \mathcal{O^-}} -\ln\sigma(\hat{y_{ui}} - \hat{y_{uj}}) + \lambda\lVert \Theta \rVert_2^2,
+    \end{equation}
+    其中~$\mathcal{O^+}$ 和 $\mathcal{O^-}$~分別表示正樣本與負樣本的集合；正樣本為符合使用者偏好的項目，而負樣本為非偏好項目。$\sigma(\cdot)$ 是 S 型函數 (sigmoid function)，可將輸出的範圍限制在 $[0, 1]$ 之間，用以衡量正樣本和負樣本之間的預測差距。此目標函數的設計旨在使正樣本的預測值 $\hat{y_{ui}}$ 高於負樣本的預測值 $\hat{y_{uj}}$，即期望 $\hat{y_{ui}}$ 越高越好，而 $\hat{y_{uj}}$ 越低越好，從而增強模型對正負樣本的區分能力。
+
+    該目標函數包含了一項 L2 正則項，用於減少模型過擬合的風險。$\lambda$ 是 L2 正則化的係數，$\Theta = \{E_I, Q, W, b\}$ 表示模型中所有需要學習的參數集。通過引入正則項，模型的權重得以控制在合理範圍內，避免權重過大導致的模型複雜性增加。
+
+    在計算過程中，預測差距 $\hat{y_{ui}} - \hat{y_{uj}}$ 的值範圍在 $[-1, 1]$，經過 S 型函數 $\sigma(\cdot)$ 映射後，範圍被壓縮到 $[0, 1]$。為了使目標函數在最大化的情況下實現梯度下降 (gradient descent) 訓練，對公式添加負號，這樣在取對數 $\ln$ 後，所有值為正，因此相當於最小化正的損失值，使得模型能夠通過梯度下降的方式進行有效優化。
