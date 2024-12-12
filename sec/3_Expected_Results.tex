@@ -41,31 +41,63 @@
         \begin{equation}
             \mathbf{e_i} = \mathbf{e_i} \times S_i,
         \end{equation}
-        其中 \(S_i\) 代表店家 \(i\) 的評分，\(\mathbf{e_i}\) 為店家 \(i\) 的最終嵌入向量。
+        其中 \(S_i\) 代表店家 \(i\) 的評分，\(\mathbf{h_i}\) 為店家 \(i\) 的最終嵌入向量。
         
 
 
     \subsection{Dataset}
         \begin{table}[h]
             \centering
-            \caption{\\ STATISTICAL INFORMATION OF THE DATASETS}
-            \begin{tabular}{|c|c|c|c|c|}
-            \hline
+            \caption{\\ 數據集的統計分析}
+            \begin{tabular}{lllll}
+            \toprule
             \textbf{Dataset Name} & \textbf{User} & \textbf{Item} & \textbf{Interaction} & \textbf{Density} \\
             \hline
-            Row 1 & Row 1 & Row 1 & Row 1 & Row 1 \\
+            Ratio 0.6 & 47 & 174 & 820 & 0.10026 \\
             \hline
-            Row 1 & Row 1 & Row 1 & Row 1 & Row 1 \\
+            Ratio 0.7 & 47 & 174 & 957 & 0.11702 \\
             \hline
-            Row 1 & Row 1 & Row 1 & Row 1 & Row 1 \\
+            Ratio 0.8 & 47 & 174 & 1115 & 0.13634 \\
             \hline
-            Row 1 & Row 1 & Row 1 & Row 1 & Row 1 \\
+            Ratio 0.9 & 47 & 174 & 1259 & 0.15394 \\
             \hline
-            Row 1 & Row 1 & Row 1 & Row 1 & Row 1 \\
+            Ratio 1.0 & 47 & 174 & 1389 & 0.16984 \\
             \hline
             \end{tabular}
             \label{table2}
         \end{table}
-        本研究整理了從 Foodpanda 和 Google Map 所獲取的餐廳相關資料，分別蒐集了 77 間與 97 間餐廳的資訊。針對每間餐廳（item），設定了多項特徵，包括餐廳名稱、價位範疇，以及食物類別。其中，食物類別的分類主要參考 Foodpanda 中原有的分類方式，最終定義的食物類別約有 40 種，包括滷味、便當、牛排、披薩、壽司等。然而，由於從 Google Map 所取得的餐廳資料缺乏食物類別的相關分類，我們以人工方式為這些餐廳標註相應的食物類別標籤。
+        \begin{table}[h]
+            \centering
+            \caption{\\ 類別對應}
+            \renewcommand{\arraystretch}{1.5}
+            \begin{tabular}{|c|p{0.35\textwidth}|}
+            \hline
+            \textbf{Cuisine Category} & \textbf{Subcategories} \\
+            \hline
+            {中式/台式料理} & 台式, 滷味, 便當, 小吃, 粥, 炒飯, \newline 餃子, 湯品 \\
+            \hline
+            日韓料理 & 日式, 壽司, 丼飯/蓋飯, 拉麵, 韓式 \\
+            \hline
+            東南亞料理 & 泰式, 越式, 東南亞, 咖哩 \\
+            \hline
+            歐美料理 & 牛排, 披薩, 義大利麵, 三明治 / 吐司, \newline 早餐, 歐美 \\
+            \hline
+            港澳及異國料理 & 港式, 異國 \\
+            \hline
+            健康餐與素食 & 健康餐, 素食 \\
+            \hline
+            快餐/炸物 & 漢堡, 炸雞, 鹹酥雞/雞排 \\
+            \hline
+            甜點與飲料 & 飲料, 甜點, 蛋糕, 甜甜圈, 豆花, 咖啡 \\
+            \hline
+            火鍋及燒烤 & 火鍋, 燒烤, 鐵板燒 \\
+            \hline
+            麵食類 & 麵食 \\
+            \hline
+            \end{tabular}
+            \label{table3}
+        \end{table}
+        
+        本研究整理了來自 Foodpanda 和 Google Map 的餐廳相關資料，分別蒐集了 77 間與 97 間餐廳的資訊。針對每間餐廳，設定多項特徵，包括餐廳名稱、價位範疇及食物類別。其中，食物類別的分類主要參考 Foodpanda 平台原有的分類方式，最終定義出約 40 種食物類別，如滷味、便當、牛排、披薩及壽司等。然而，由於 Google Map 所獲取的餐廳資料缺乏食物類別分類，本研究以人工方式為該來源的餐廳資料標註相應的食物類別標籤。進一步地，為簡化分析，研究將細分的 40 種食物類別整合為 20 類，並最終合併為 10 類，其對應方式如表所示。
         
 \color{black}
