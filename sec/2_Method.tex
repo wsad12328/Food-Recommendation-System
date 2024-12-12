@@ -27,7 +27,7 @@
     \end{equation} 
     其中 $W \in \mathbb{R}^{2d \times d}$、$Q \in \mathbb{R}^{1 \times d}$、$b \in \mathbb{R}^{1 \times d}$，這三個參數分別為注意力機制中的權重矩陣與偏置項。此處的 $\sigma(\cdot)$ 同樣為雙曲正切函數 (tanh)，而 $||$ 則表示向量的串接操作。$\rho(u, i)$ 的分數越高，代表使用者 $u$ 與餐廳 $i$ 之間的關聯性越強。因此，透過該分數可以量化每個餐廳節點對於預測使用者偏好的貢獻度。
 
-    為將注意力分數限制在 $[0,1]$ 的範圍內，利用 Softmax 函數對這些分數進行範圍歸一化處理，得到最終的注意力值 $\alpha(u, i)$。公式如下： \begin{equation} \alpha(u, i) = \frac{\exp(\rho(u, i))}{\left(\sum_{j \in N_u}\exp(\rho(u, j))\right)^{\beta}}. \end{equation} 其中 $\alpha(u, i)$ 代表了使用者節點 $u$ 與餐廳節點 $i$ 之間的最終注意力值。透過~$\alpha(u, i)$，每個使用者節點均能依據其鄰居的特徵，綜合考量注意力分數來完成向量更新。
+    為將注意力分數限制在 $[0,1]$ 的範圍內，利用 Softmax 函數對這些分數進行範圍歸一化處理，得到最終的注意力值 $\alpha(u, i)$。公式如下： \begin{equation} \alpha(u, i) = \frac{\exp(\rho(u, i))}{\left(\sum_{j \in N_u}\exp(\rho(u, j))\right)^{\beta}}, \end{equation} 其中 $\alpha(u, i)$ 代表了使用者節點 $u$ 與餐廳節點 $i$ 之間的最終注意力值。透過~$\alpha(u, i)$，每個使用者節點均能依據其鄰居的特徵，綜合考量注意力分數來完成向量更新。
 
 
     在初始嵌入狀態完成後，為進行更深層的特徵傳播，使用者節點 $u$ 的嵌入向量 $e_u^{(k)}$ 將在每一層根據其鄰居節點的資訊進行更新。使用者的嵌入向量 $e_u^{(k)}$ 的更新方式會依據先前計算出的注意力權重 $\alpha(u, i)$，並利用相鄰餐廳節點 $i$ 在上一層的嵌入向量 $e_i^{(k-1)}$ 進行加法聚合 (Add Aggregation)。此聚合方式可以有效融合鄰居的特徵信息，更新的計算公式如下： 
@@ -51,7 +51,7 @@
     \begin{equation} 
         \hat{y_{ui}} = f(u, i) = \sigma(e_u^{*T} e_i^*), 
     \end{equation} 
-    其中，$\hat{y_{ui}}$ 表示模型對於使用者 $u$ 和餐廳 $i$ 之間關聯性的預測結果。S 型函數 $\sigma(\cdot)$ 將內積的結果映射到 $[0, 1]$ 的範圍，使得模型的輸出可以被解釋為一個概率值，表達使用者 $u$ 對餐廳 $i$ 的喜好程度。
+    其中，$\hat{y_{ui}}$ 表示模型對於使用者 $u$ 和餐廳 $i$ 之間關聯性的預測結果。S 型函數 $\sigma(\cdot)$ 將內積的結果映射到 $[0, 1]$ 的範圍，使得模型的輸出可以被解釋為一個機率值，表達使用者 $u$ 對餐廳 $i$ 的喜好程度。
 
 \subsection{Model Optimization}
     本研究模型的目標函數採用貝氏個性化排序 (Bayesian Personalized Ranking, BPR)，以實現使用者偏好排序的優化，具體公式如下：
