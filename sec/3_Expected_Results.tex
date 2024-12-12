@@ -9,7 +9,7 @@
         本研究的資料前處理架構如 \textbackslash xfig\{fig-preprocess\} 所示，透過爬蟲技術從 Foodpanda 與 Google Maps 收集餐廳相關資料。每間餐廳的數據包含餐廳名稱、類型、評分以及顧客評論。由於餐廳通常會累積大量評論，這些評論對於描述店家的服務品質、餐點特色與顧客體驗具有高度相關性。然而，若將所有評論直接整合後丟入 GPT-4 進行分析，評論主題的多樣性可能導致資訊雜亂，進而影響模型微調（fine-tuning）的效果。當不同主題的評論混合訓練時，模型可能難以準確識別每類特徵的意圖，進一步降低結果的精確性。
 
         為解決上述問題並提升模型的針對性，本研究先將評論依主題分為三類：\textbf{餐點品質}、\textbf{店內環境氛圍}，以及\textbf{綜合評價}。針對這三類評論，分別進行獨立的 LLM 微調，以使每個模型專注於特定主題特徵，避免不同主題資訊的相互干擾。對於餐點品質的評論，模型學習重點為食物的口感、品質及外觀呈現；對於店內環境氛圍的評論，模型則專注於用餐環境、設計風格及舒適度的相關描述；而綜合評價的模型則著重於顧客的整體體驗。透過分主題進行微調，模型得以精準掌握各主題的特徵表現，進一步增強評論處理的針對性。
-        
+        \color{blue}
         完成主題分類及模型微調後，本研究針對各主題的評論進行情感分析，以判斷評論的情感取向（正面或負面）。主題分類與情感分類的結果分別以 one-hot encoding 表示。其中，主題分類的向量表示為：
         \begin{equation}
             \mathbf{h}_c \in \mathbb{R}^3,
@@ -46,6 +46,26 @@
 
 
     \subsection{Dataset}
-
+        \begin{table}[h]
+            \centering
+            \caption{\\ STATISTICAL INFORMATION OF THE DATASETS}
+            \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            \textbf{Dataset Name} & \textbf{User} & \textbf{Item} & \textbf{Interaction} & \textbf{Density} \\
+            \hline
+            Row 1 & Row 1 & Row 1 & Row 1 & Row 1 \\
+            \hline
+            Row 1 & Row 1 & Row 1 & Row 1 & Row 1 \\
+            \hline
+            Row 1 & Row 1 & Row 1 & Row 1 & Row 1 \\
+            \hline
+            Row 1 & Row 1 & Row 1 & Row 1 & Row 1 \\
+            \hline
+            Row 1 & Row 1 & Row 1 & Row 1 & Row 1 \\
+            \hline
+            \end{tabular}
+            \label{table2}
+        \end{table}
+        本研究整理了從 Foodpanda 和 Google Map 所獲取的餐廳相關資料，分別蒐集了 77 間與 97 間餐廳的資訊。針對每間餐廳（item），設定了多項特徵，包括餐廳名稱、價位範疇，以及食物類別。其中，食物類別的分類主要參考 Foodpanda 中原有的分類方式，最終定義的食物類別約有 40 種，包括滷味、便當、牛排、披薩、壽司等。然而，由於從 Google Map 所取得的餐廳資料缺乏食物類別的相關分類，我們以人工方式為這些餐廳標註相應的食物類別標籤。
         
 \color{black}
